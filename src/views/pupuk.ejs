@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pupuk</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h2>Daftar Pupuk</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% pupuks.forEach(function(pupuk) { %>
+                    <tr>
+                        <td><%= pupuk.nama %></td>
+                        <td><%= pupuk.harga %></td>
+                        <td><%= pupuk.stok %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

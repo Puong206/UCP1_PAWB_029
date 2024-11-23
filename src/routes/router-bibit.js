@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {bibitController} = require('../controllers').bibit;
+const {bibitController} = require('../controllers');
 
 router.get('/bibit', bibitController.getAllBibit);
 router.get('/bibit/add', bibitController.formAddBibit);

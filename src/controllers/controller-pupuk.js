@@ -1,6 +1,5 @@
 const config = require('../configs/database');
 let mysql = require('mysql');
-const { connect } = require('../routes/router-login');
 let pool = mysql.createPool(config);
 
 pool.on('error', (err) => {
@@ -24,7 +23,7 @@ module.exports = {
 
     formAddPupuk(req, res) {
         res.render('addPupuk', {
-            url: 'http://localhost:8000',
+            url: 'http://localhost:8000/',
         });
     },
 

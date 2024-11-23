@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {registerController} = require('../controllers').register;
+const {registerController} = require('../controllers');
 const verifyUser = require ('../configs/verify');
 
 router.get('/', verifyUser.isLogout, registerController.formRegister);

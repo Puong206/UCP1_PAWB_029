@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {loginController} = require('../controllers').login;
+const {loginController} = require('../controllers');
 const verifyUser = require('../configs/verify');
 
 router.get('/', verifyUser.isLogout, loginController.login);
