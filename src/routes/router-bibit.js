@@ -1,12 +1,13 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getAllBibit, formAddBibit, saveBibit, formEditBibit, updateBibit, deleteBibit } = require('../controllers/controller-bibit');
+const bibitController = require("../controllers/controller-bibit");
+const verifyUser = require("../configs/verify");
 
-router.get('/bibit', getAllBibit);
-router.get('/bibit/add', formAddBibit);
-router.post('/bibit/save', saveBibit);
-router.get('/bibit/edit/:id', formEditBibit);
-router.post('/bibit/edit/:id', updateBibit);
-router.get('/bibit/delete/:id', deleteBibit);
+router.get("/", verifyUser.isLogin, bibitController.getAllBibit);
+router.get("/add", verifyUser.isLogin, bibitController.addBibitForm);
+router.post("/save", verifyUser.isLogin, bibitController.saveBibit);
+router.get("/edit/:id", verifyUser.isLogin, bibitController.editBibitForm);
+router.post("/edit/:id", verifyUser.isLogin, bibitController.updateBibit);
+router.get("/delete/:id", verifyUser.isLogin, bibitController.deleteBibit);
 
 module.exports = router;

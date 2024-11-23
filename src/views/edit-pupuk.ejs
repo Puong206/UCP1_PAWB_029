@@ -11,15 +11,15 @@
         <h1 class="text-center">Edit Pupuk</h1>
         <form action="/pupuk/edit/<%= pupuk.id %>" method="POST">
             <div class="form-group">
-                <label for="nama">Nama</label>
+                <label for="nama">Nama Pupuk</label>
                 <input type="text" class="form-control" name="nama" id="nama" value="<%= pupuk.nama %>" required>
             </div>
             <div class="form-group">
-                <label for="harga">Harga</label>
+                <label for="harga">Harga Pupuk</label>
                 <input type="number" class="form-control" name="harga" id="harga" value="<%= pupuk.harga %>" required>
             </div>
             <div class="form-group">
-                <label for="stok">Stok</label>
+                <label for="stok">Stok Pupuk</label>
                 <input type="number" class="form-control" name="stok" id="stok" value="<%= pupuk.stok %>" required>
             </div>
             <button type="submit" class="btn btn-warning btn-block">Update</button>

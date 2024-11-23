@@ -1,12 +1,13 @@
 const express = require('express');
+const pupukController = require('../controllers/controller-pupuk');
+const verifyUser = require('../configs/verify');
 const router = express.Router();
-const { pupukController } = require('../controllers');
 
-router.get('/pupuk', pupukController.getAllPupuk);
-router.get('/pupuk/add', pupukController.formAddPupuk);
-router.post('/pupuk/save', pupukController.savePupuk);
-router.get('/pupuk/edit/:id', pupukController.formEditPupuk);
-router.post('/pupuk/edit/:id', pupukController.updatePupuk);
-router.get('/pupuk/delete/:id', pupukController.deletePupuk);
+router.get("/", verifyUser.isLogin, pupukController.getAllPupuk);
+router.get("/add", verifyUser.isLogin, pupukController.addPupukForm);
+router.post("/save", verifyUser.isLogin, pupukController.savePupuk);
+router.get("/edit/:id", verifyUser.isLogin, pupukController.editPupukForm);
+router.post("/edit/:id", verifyUser.isLogin, pupukController.updatePupuk);
+router.get("/delete/:id", verifyUser.isLogin, pupukController.deletePupuk);
 
 module.exports = router;

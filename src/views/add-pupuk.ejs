@@ -11,20 +11,19 @@
         <h1 class="text-center">Tambah Pupuk Baru</h1>
         <form action="/pupuk/save" method="POST">
             <div class="form-group">
-                <label for="nama">Nama</label>
-                <input type="text" class="form-control" name="nama" id="nama" required>
+                <label for="nama">Nama Pupuk</label>
+                <input type="text" class="form-control" id="nama" name="nama" required>
             </div>
             <div class="form-group">
-                <label for="harga">Harga</label>
-                <input type="number" class="form-control" name="harga" id="harga" required>
+                <label for="harga">Harga Pupuk</label>
+                <input type="number" class="form-control" id="harga" name="harga" required>
             </div>
             <div class="form-group">
-                <label for="stok">Stok</label>
-                <input type="number" class="form-control" name="stok" id="stok" required>
+                <label for="stok">Stok Pupuk</label>
+                <input type="number" class="form-control" id="stok" name="stok" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Simpan</button>
         </form>
-        <a href="/pupuk" class="btn btn-secondary btn-block mt-3">Kembali ke Daftar Pupuk</a>
     </div>
 </body>
 </html>
