@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pupuk</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Kelola Pupuk</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Daftar Pupuk</h2>
-        <table class="table">
+    <div class="container mt-5">
+        <h1 class="text-center">Kelola Pupuk</h1>
+        <a href="/pupuk/add" class="btn btn-success mb-3">Tambah Pupuk Baru</a>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Nama</th>
                     <th>Harga</th>
                     <th>Stok</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <% pupuks.forEach(function(pupuk) { %>
+                <% pupuk.forEach(pupuk => { %>
                     <tr>
                         <td><%= pupuk.nama %></td>
                         <td><%= pupuk.harga %></td>
                         <td><%= pupuk.stok %></td>
+                        <td>
+                            <a href="/pupuk/edit/<%= pupuk.id %>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/pupuk/delete/<%= pupuk.id %>" class="btn btn-danger btn-sm">Hapus</a>
+                        </td>
                     </tr>
-                <% }) %>
+                <% }); %>
             </tbody>
         </table>
     </div>

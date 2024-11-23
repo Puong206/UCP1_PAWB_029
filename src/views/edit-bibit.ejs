@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Bibit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Edit Bibit</h1>
+        <form action="/bibit/edit/<%= bibit.id %>" method="POST">
+            <div class="form-group">
+                <label for="nama">Nama Bibit</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="<%= bibit.nama %>" required>
+            </div>
+            <div class="form-group">
+                <label for="jenis">Jenis Bibit</label>
+                <input type="text" class="form-control" id="jenis" name="jenis" value="<%= bibit.jenis %>" required>
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga Bibit</label>
+                <input type="number" class="form-control" id="harga" name="harga" value="<%= bibit.harga %>" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Perbarui</button>
+        </form>
+    </div>
+</body>
+</html>

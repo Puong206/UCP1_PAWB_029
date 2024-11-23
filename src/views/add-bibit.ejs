@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Bibit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Tambah Bibit Baru</h1>
+        <form action="/bibit/save" method="POST">
+            <div class="form-group">
+                <label for="nama">Nama Bibit</label>
+                <input type="text" class="form-control" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="jenis">Jenis Bibit</label>
+                <input type="text" class="form-control" id="jenis" name="jenis" required>
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga Bibit</label>
+                <input type="number" class="form-control" id="harga" name="harga" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+    </div>
+</body>
+</html>

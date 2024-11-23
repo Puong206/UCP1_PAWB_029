@@ -3,30 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibit</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Kelola Bibit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Daftar Bibit</h2>
+    <div class="container mt-5">
+        <h1>Daftar Bibit</h1>
+        <a href="/bibit/add" class="btn btn-success mb-3">Tambah Bibit</a>
         <table class="table">
             <thead>
                 <tr>
                     <th>Nama</th>
                     <th>Jenis</th>
                     <th>Harga</th>
-                    <th>Stok</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <% bibits.forEach(function(bibit) { %>
+                <% bibit.forEach(bibit => { %>
                     <tr>
                         <td><%= bibit.nama %></td>
                         <td><%= bibit.jenis %></td>
                         <td><%= bibit.harga %></td>
-                        <td><%= bibit.stok %></td>
+                        <td>
+                            <a href="/bibit/edit/<%= bibit.id %>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/bibit/delete/<%= bibit.id %>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus bibit ini?')">Hapus</a>
+                        </td>
                     </tr>
-                <% }) %>
+                <% }); %>
             </tbody>
         </table>
     </div>

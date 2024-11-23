@@ -1,46 +1,49 @@
-const express = require('express');
-const pool = require('../configs/database');
+const pool = require("../configs/database");
 
 module.exports = {
-    home (req, res) {
-        res.render('home', {
-            url: 'http://localhost:8000/',
-            title: 'Dashboard Pupuk & Bibit Tanaman'
+    home: (req, res) => {
+        const queryBibit = "SELECT * FROM bibit";
+        const queryPupuk = "SELECT * FROM pupuk";
+        
+        pool.query(queryBibit, (errorBibit, resultsBibit) => {
+            if (errorBibit) {
+                console.error("Error executing query (bibit):", errorBibit);
+                return res.status(500).send("Terjadi kesalahan saat mengambil data bibit.");
+            }
+
+            pool.query(queryPupuk, (errorPupuk, resultsPupuk) => {
+                if (errorPupuk) {
+                    console.error("Error executing query (pupuk):", errorPupuk);
+                    return res.status(500).send("Terjadi kesalahan saat mengambil data pupuk.");
+                }
+
+                res.render("home", {
+                    bibit: resultsBibit,
+                    pupuk: resultsPupuk
+                });
+            });
         });
     },
 
-    getAllData(req, res) {
-        pool.getConnection(function (err, connection) {
-            if (err) {
-                console.error("Koneksi ke Database terganggu : ", err);
-                res.status(500).send("Koneksi Database Error");
-                return;
+    getAllData: (req, res) => {
+        const queryBibit = "SELECT * FROM bibit";
+        const queryPupuk = "SELECT * FROM pupuk";
+
+        pool.query(queryBibit, (errorBibit, resultsBibit) => {
+            if (errorBibit) {
+                console.error("Error executing query (bibit):", errorBibit);
+                return res.status(500).send("Terjadi kesalahan saat mengambil data bibit.");
             }
 
-            connection.query('SELECT * FROM pupuk', function (err, pupukResults) {
-                if (err) {
-                    console.error("Kesalahan saat mengambil data : ", err);
-                    res.status(500).send("Kesalahan Pengambilan Data Pupuk");
-                    connection.release();
-                    return;
+            pool.query(queryPupuk, (errorPupuk, resultsPupuk) => {
+                if (errorPupuk) {
+                    console.error("Error executing query (pupuk):", errorPupuk);
+                    return res.status(500).send("Terjadi kesalahan saat mengambil data pupuk.");
                 }
-
-                connection.query('SELECT * FROM bibit', function (err, bibitResults) {
-                    if (err) {
-                        console.error("Kesalahan saat mengambil data : ", err);
-                        res.status(500).send("Kesalahan Pengambilan Data Bibit");
-                        connection.release();
-                        return;
-                    }
-
-                    res.render('home', {
-                        url: 'http://localhost:8000/',
-                        title: 'Dashboard Pupuk & Bibit Tanaman',
-                        pupukData: pupukResults,
-                        bibitData: bibitResults
-                    });
-
-                    connection.release();
+                
+                res.render("home", {
+                    bibit: resultsBibit,
+                    pupuk: resultsPupuk
                 });
             });
         });

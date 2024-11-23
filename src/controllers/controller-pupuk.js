@@ -1,86 +1,72 @@
-const config = require('../configs/database');
-let mysql = require('mysql');
-let pool = mysql.createPool(config);
+const pool = require('../configs/database');
 
-pool.on('error', (err) => {
-    console.error(err);
-});
+const getAllPupuk = (req, res) => {
+    pool.query('SELECT * FROM pupuk', (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database Error");
+        }
+        res.render('pupuk', { pupuk: results });
+    });
+};
 
-let pupukArray = [];
+const formAddPupuk = (req, res) => {
+    res.render('addPupuk');
+};
+
+const savePupuk = (req, res) => {
+    const { nama, jenis, harga } = req.body;
+    const query = 'INSERT INTO pupuk (nama, jenis, harga) VALUES (?, ?, ?)';
+    pool.query(query, [nama, jenis, harga], (err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error saving pupuk");
+        }
+        res.redirect('/pupuk');
+    });
+};
+
+const formEditPupuk = (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM pupuk WHERE id = ?';
+    pool.query(query, [id], (err, results) => {
+        if (err || results.length === 0) {
+            return res.status(404).send("Pupuk not found");
+        }
+        res.render('editPupuk', { pupuk: results[0] });
+    });
+};
+
+const updatePupuk = (req, res) => {
+    const { id } = req.params;
+    const { nama, jenis, harga } = req.body;
+    const query = 'UPDATE pupuk SET nama = ?, jenis = ?, harga = ? WHERE id = ?';
+    pool.query(query, [nama, jenis, harga, id], (err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error updating pupuk");
+        }
+        res.redirect('/pupuk');
+    });
+};
+
+const deletePupuk = (req, res) => {
+    const { id } = req.params;
+    const query = 'DELETE FROM pupuk WHERE id = ?';
+    pool.query(query, [id], (err) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Error deleting pupuk");
+        }
+        res.redirect('/pupuk');
+    });
+};
 
 module.exports = {
-    getAllPupuk(req, res) {
-        pool.getConnection((err, connection) => {
-            if (err) throw err;
-            connection.query('SELECT * FROM pupuk', (error, results) => {
-                if (error) throw error;
-                pupukArray = results;
-                res.render('pupuk', {pupuk: pupukArray});
-            });
-            connection.release();
-        });
-    },
-
-    formAddPupuk(req, res) {
-        res.render('addPupuk', {
-            url: 'http://localhost:8000/',
-        });
-    },
-
-    savePupuk(req, res) {
-        const {nama, stok} = req.body;
-        if (nama && stok) {
-            pool.getConnection((err, connection) => {
-                if (err) throw err;
-                connection.query(
-                    'INSERT INTO pupuk (nama, stok) VALUES (?, ?)', [nama, stok],
-                    (error, results) => {
-                        if (error) throw error;
-                        pupukArray.push({ id: results.insertId, nama, stok});
-                        res.redirect('/pupuk');
-                    }
-                );
-                connection.release();
-            });
-        } else {
-            res.redirect('/pupuk/add');
-        }
-    },
-
-    formEditPupuk (req, res) {
-        const {id} = req.params;
-        const pupuk = pupukArray.find((item) => item.id == id);
-        res.render('editPupuk', { pupuk });
-    },
-
-    updatePupuk(req, res) {
-        const { id } = req.params;
-        const { nama, stok } = req.body;
-        pool.getConnection((err, connection) => {
-            if (err) throw err;
-            connection.query(
-                'UPDATE pupuk SET nama = ?, stok = ?, WHERE id = ?', [nama, stok, id],
-                (error) => {
-                    if (error) throw error;
-                    const index = pupukArray.findIndex((item) => item.id == id);
-                    if (index !== -1) pupukArray[index] = { id, nama, stok };
-                    res.redirect('/pupuk');
-                }
-            );
-            connection.release();
-        });
-    },
-
-    deletePupuk(req, res) {
-        const { id } = req.params;
-        pool.getConnection((err, connection) => {
-            if (err) throw err;
-            connection.query('DELETE FROM pupuk WHERE id = ?', [id], (error) => {
-                if (error) throw error;
-                pupukArray = pupukArray.filter((item) => item.id != id);
-                res.redirect('/pupuk');
-            });
-            connection.release();
-        });
-    },
+    getAllPupuk,
+    formAddPupuk,
+    savePupuk,
+    formEditPupuk,
+    updatePupuk,
+    deletePupuk,
 };

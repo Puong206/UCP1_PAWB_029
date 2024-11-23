@@ -1,39 +1,22 @@
-const config = require('../configs/database');
-let mysql = require('mysql');
-let pool = mysql.createPool(config);
-
-pool.on('error',(err) => {
-    console.error(err);
-});
+const pool = require("../configs/database");
 
 module.exports = {
-    formRegister(req,res) {
-        res.render("register", {
-            url : 'http://localhost:8000/',
-        });
+    formRegister: (req, res) => {
+        res.render("register");
     },
-    saveRegister(req, res) {
-        let username = req.body.username;
-        let email = req.body.email;
-        let password = req.body.pass;
-        if (username && email && password) {
-            pool,getConnection(function(err, connection) {
-                if (err) throw err;
-                connection.query(
-                    'INSERT INTO users (nama, email, password) VALUES (?, ?, SHA2(?,512);'
-                , [username, email, password], function (error, results) {
-                    if (error) throw error;
-                    req.flash('color', 'success');
-                    req.flash('status', 'Yes..');
-                    req.flash('message', 'Registrasi Berhasil!');
-                    res.redirect('./login');
-                });
-                connection.release();
-                
-            })
-        } else {
-            res.redirect('/login');
-            res.end();
-        }
+
+    saveRegister: (req, res) => {
+        const { nama, email, password } = req.body;
+        
+        const query = "INSERT INTO users (nama, email, password) VALUES (?, ?, ?)";
+        
+        pool.query(query, [nama, email, password], (error, results) => {
+            if (error) {
+                console.error("Error executing query:", error);
+                return res.status(500).send("Terjadi kesalahan saat menyimpan data.");
+            }
+
+            res.redirect("/login");
+        });
     }
-}
+};
