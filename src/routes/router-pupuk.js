@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pupukController = require('../controllers/controller-pupuk');
+const {pupukController} = require('../controllers').pupuk;
 
 router.get('/pupuk', pupukController.getAllPupuk);
 router.get('/pupuk/add', pupukController.formAddPupuk);
