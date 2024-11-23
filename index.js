@@ -24,7 +24,7 @@ app.use(
     })
 );
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(flash());
 
@@ -37,8 +37,8 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.set("views", path.join(__dirname, "src", "views"));
-app.set("view engine", ejs);
+app.set("views", path.join(__dirname, "src/views"));
+app.set("view engine", "ejs");
 
 app.use("/", homeRoutes);
 app.use("/pupuk", pupukRoutes);
@@ -48,7 +48,6 @@ app.use("/register", registerRoutes);
 
 console.log(app._router.stack);
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-    console.log("Server berjalan di port : " + PORT);
-});
+app.listen(8000, () => {
+    console.log("Server Berjalan di Port : " + 8000);
+  });
